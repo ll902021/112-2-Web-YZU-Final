@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet"href="{{url_for('static', filename='css/style.css')}}">
+    </head>
+    <body>
+        <div class="container">
+            <canvas id="myCanvas"width="1600"height="900"></canvas>
+
+            <div class="column">
+                <div class="products">
+                    <div class="word" id="exchange">30</div>
+                    <div class="word">今日匯率: </div>
+                </div>
+                <div class="products">
+                    <div class="word" id="wallet">1000</div>
+                    <div class="word">錢包: </div>
+                </div>
+                
+                <button id="nick" onclick="Nick()">選單</button>
+                <button id="back" onclick="Back()">返回</button>
+                <br>
+                <br>
+                <button id="market" onclick="Market()">購買</button>
+                <button id="food" onclick="Cook()">製作</button>
+                <button id="ingredients" onclick="Ingredients()">價格</button>
+                <br>
+                <button id="right" onclick="Right()">上一頁</button>
+                <button id="left" onclick="Left()">下一頁</button>
+                <br>
+
+                <br>
+                <button id="0" onclick="buyProduct(this.id)">買肉</button>
+                <button id="1" onclick="buyProduct(this.id)">買牛奶</button>
+                <button id="2" onclick="buyProduct(this.id)">買蛋</button>
+                <button id="3" onclick="buyProduct(this.id)">買小麥</button>
+                <br>
+                <button id="4" onclick="buyProduct(this.id)">買棕色蘑菇</button>
+                <button id="5" onclick="buyProduct(this.id)">買紅色蘑菇</button>
+                <button id="6" onclick="buyProduct(this.id)">買糖</button>
+                <button id="7" onclick="buyProduct(this.id)">買蜂蜜</button>
+
+                <br>
+                <br>
+                <button id="makeBread" onclick="make(this.id)">麵包</button>
+                <button id="makeBeef" onclick="make(this.id)">烤牛肉</button>
+                <button id="makeMashroom" onclick="make(this.id)">蘑菇湯</button>
+                <br>
+                <button id="makeCake" onclick="make(this.id)">蛋糕</button>
+                <button id="makeDrink" onclick="make(this.id)">飲料</button>
+                <button id="makePie" onclick="make(this.id)">派</button>
+
+                <div class="products">
+                    <div class="product">
+                        <p>價格:(USD)</p>
+                        <div id="products">
+                            <div class="product" id="meat">肉: <span class="price" id="price-meat">35</span> </div>
+                            <div class="product" id="milk">牛奶: <span class="price" id="price-milk">30</span> </div>
+                            <div class="product" id="egg">蛋: <span class="price" id="price-egg">5</span> </div>
+                            <div class="product" id="wheat">小麥: <span class="price" id="price-wheat">10</span> </div>
+                            <div class="product" id="brown-mushroom">棕色蘑菇: <span class="price" id="price-brown-mushroom">20</span> </div>
+                            <div class="product" id="red-mushroom">紅色蘑菇: <span class="price" id="price-red-mushroom">25</span> </div>
+                            <div class="product" id="sugar">糖: <span class="price" id="price-sugar">3</span> </div>
+                            <div class="product" id="honey">蜂蜜: <span class="price" id="price-honey">40</span> </div>
+                        </div>
+                    </div>
+                    <div class="product">
+                        <p>庫存食材:</p>
+                        <div class="product" id="meat">肉: <span class="productQuantity" id="price-meat">350</span> </div>
+                        <div class="product" id="milk">牛奶: <span class="productQuantity" id="price-milk">0</span> </div>
+                        <div class="product" id="egg">蛋: <span class="productQuantity" id="price-egg">0</span> </div>
+                        <div class="product" id="wheat">小麥: <span class="productQuantity" id="price-wheat">0</span> </div>
+                        <div class="product" id="brown-mushroom">棕色蘑菇: <span class="productQuantity" id="price-brown-mushroom">0</span> </div>
+                        <div class="product" id="red-mushroom">紅色蘑菇: <span class="productQuantity" id="price-red-mushroom">0</span> </div>
+                        <div class="product" id="sugar">糖: <span class="productQuantity" id="price-sugar">0</span> </div>
+                        <div class="product" id="honey">蜂蜜: <span class="productQuantity" id="price-honey">0</span> </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    
+                    <!-- <p>收成:</p> -->
+                    <!-- <div>收成</div>
+                    <div id="gain">
+                        <div class="gain" id="bread">麵包(1000): <span class="gaincuisine" id="gain-bread">0</span><span><button id="gainBread" onclick="gain(this.id)">麵包</button></span> </div>
+                        <div class="gain" id="beef">烤牛肉(1100): <span class="gaincuisine" id="gain-beef">0</span><span><button id="gainBeef" onclick="gain(this.id)">烤牛肉</button></span> </div>
+                        <div class="gain" id="mashroom">蘑菇湯(1400): <span class="gaincuisine" id="gain-mashroom">0</span><span><button id="gainMashroom" onclick="gain(this.id)">蘑菇湯</button></span> </div>
+                        <div class="gain" id="cake">蛋糕(2400): <span class="gaincuisine" id="gain-cake">0</span><span><button id="gainCake" onclick="gain(this.id)">蛋糕</button></span> </div>
+                        <div class="gain" id="drink">飲料(2500): <span class="gaincuisine" id="gain-drink">0</span><span><button id="gainDrink" onclick="gain(this.id)">飲料</button></span> </div>
+                        <div class="gain" id="pie">派(950): <span class="gaincuisine" id="gain-pie">0</span> <span><button id="gainPie" onclick="gain(this.id)">派</button></span></div>
+                    </div> -->
+
+                    <div class="move-down">
+                        <div>收成</div>
+                        <div id="gain">
+                            <div class="gain" id="bread">麵包(1000): <span class="gaincuisine" id="gain-bread">0</span><span><button id="gainBread" onclick="gain(this.id)">麵包</button></span> </div>
+                            <div class="gain" id="beef">烤牛肉(1100): <span class="gaincuisine" id="gain-beef">0</span><span><button id="gainBeef" onclick="gain(this.id)">烤牛肉</button></span> </div>
+                            <div class="gain" id="mashroom">蘑菇湯(1400): <span class="gaincuisine" id="gain-mashroom">0</span><span><button id="gainMashroom" onclick="gain(this.id)">蘑菇湯</button></span> </div>
+                            <div class="gain" id="cake">蛋糕(2400): <span class="gaincuisine" id="gain-cake">0</span><span><button id="gainCake" onclick="gain(this.id)">蛋糕</button></span> </div>
+                            <div class="gain" id="drink">飲料(2500): <span class="gaincuisine" id="gain-drink">0</span><span><button id="gainDrink" onclick="gain(this.id)">飲料</button></span> </div>
+                            <div class="gain" id="pie">派(950): <span class="gaincuisine" id="gain-pie">0</span> <span><button id="gainPie" onclick="gain(this.id)">派</button></span></div>
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+
+            <div id="talkBox"></div>
+            <p>時間:</p>
+            <div>
+                <span id="day"></span>
+                <span id="time"></span>
+            </div>
+            <div id="real-time"></div>
+        </div>
+        <!-- <div id="coordinates">点击坐标: (x, y)</div>  -->
+        <!-- 顯示點擊座標用 -->
+        <script src="https://unpkg.com/jquery"></script> 
+        <script src="{{url_for('static', filename='js/main3.js')}}"></script>
+        <script src="{{url_for('static', filename='js/main2.js')}}"></script>
+    </body>
+</html>
